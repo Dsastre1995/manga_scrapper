@@ -1,0 +1,12 @@
+# Dependencies
+client/node_modules
+server/node_modules
+
+.vscode
+
+server/manga-connection.session.sql
+server/src/api/public
+
+# Keep environment variables out of version control
+client/.env
+server/.env
