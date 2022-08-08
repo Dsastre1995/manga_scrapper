@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Manga {
+  id String @id @default(uuid())
+  name String @db.VarChar(100)
+  description String @db.LongText
+  image String
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  chapters Chapter[]
+}
+
+model Chapter {
+  id String @id @default(uuid())
+  title String @db.VarChar(200)
+  chapterNumber Float @default(0.00)
+  pages Page[]
+  mangaId String
+  manga Manga @relation(fields: [mangaId], references: [id])
+}
+
+model Page {
+  id String @id @default(uuid())
+  pageUrl String @db.VarChar(255)
+  pageOrder Int
+  chapterId String
+  chapter Chapter @relation(fields: [chapterId], references: [id])
+}
